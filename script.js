@@ -85,19 +85,41 @@ function monthOfYear(month) {
 
 const date = currentDate.getDate();
 const year = currentDate.getFullYear();
-const hour = currentDate.getHours();
-const minutes = currentDate.getMinutes();
-const seconds = currentDate.getSeconds();
 
-setInterval(() => {
-    let time = `${hour}:${minutes}:${seconds}`
-    // currentTime.append(`${time}`)
-}, 1000);
+todaysDate.innerHTML = `${dayOfWeek(day)}, ${monthOfYear(month)} ${date}, ${year}`;
 
-todaysDate.append(`${dayOfWeek(day)}, ${monthOfYear(month)} ${date}, ${year}`)
+// Creating and updating the clock
 
-console.log(month);
-console.log(currentDate);
-console.log(dayOfWeek(day));
-console.log(monthOfYear(month));
-console.log(hour, minutes, seconds);
+let update = setInterval(clock, 1000);
+
+function clock() {
+    const timeNow = new Date();
+    const hour = timeNow.getHours();
+    const minutes = timeNow.getMinutes();
+    const seconds = timeNow.getSeconds();
+    currentTime.innerHTML =
+        `${checkHour(hour)}:${checkZero(minutes)}:${checkZero(seconds)} ${amPm(hour)}`;
+}
+
+function amPm(time) {
+    if (time > 12) {
+        return 'PM';
+    } else {
+        return 'AM';
+    }
+}
+
+function checkHour(time) {
+    if (time > 12) {
+        return `${time - 12}`;
+    } else {
+        return time;
+    }
+}
+function checkZero(time) {
+    if (time < 10) {
+        return `0${time}`;
+    } else {
+        return time;
+    }
+}
