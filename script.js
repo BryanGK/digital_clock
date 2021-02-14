@@ -98,24 +98,9 @@ function clock() {
     const minutes = timeNow.getMinutes();
     const seconds = timeNow.getSeconds();
     currentTime.innerHTML =
-        `${checkHour(hour)}:${checkZero(minutes)}:${checkZero(seconds)} ${amPm(hour)}`;
+        `${checkZero(hour)}:${checkZero(minutes)}:${checkZero(seconds)}`;
 }
 
-function amPm(time) {
-    if (time > 12) {
-        return 'PM';
-    } else {
-        return 'AM';
-    }
-}
-
-function checkHour(time) {
-    if (time > 12) {
-        return `${time - 12}`;
-    } else {
-        return time;
-    }
-}
 function checkZero(time) {
     if (time < 10) {
         return `0${time}`;
