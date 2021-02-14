@@ -1,3 +1,13 @@
 * {
     font-family: 'abril fatface';
+    text-align: center;
+    color: #2b2b2b;
+}
+
+body {
+    background-color: ivory;
+}
+
+h1 {
+    font-size: 2em;
 }
