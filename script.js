@@ -2,93 +2,61 @@ const currentDate = new Date();
 const todaysDate = document.querySelector('#todays-date');
 const currentTime = document.querySelector('#current-time')
 
+const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+];
 
-// Getting the day of the week
+const days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+];
 
 const day = currentDate.getDay();
-
-function dayOfWeek(day) {
-    switch (day) {
-        case 0:
-            return 'Sunday';
-            break;
-        case 1:
-            return 'Monday';
-            break;
-        case 2:
-            return 'Tuesday';
-            break;
-        case 3:
-            return 'Wednesday';
-            break;
-        case 4:
-            return 'Thursday';
-            break;
-        case 5:
-            return 'Friday';
-            break;
-        case 6:
-            return 'Saturday';
-        default:
-            return "ERROR!"
-            break;
-    }
-}
-
-// Getting the month 
-
 const month = currentDate.getMonth();
-
-function monthOfYear(month) {
-    switch (month) {
-        case 0:
-            return 'January';
-            break;
-        case 1:
-            return 'February';
-            break;
-        case 2:
-            return 'March';
-            break;
-        case 3:
-            return 'April';
-            break;
-        case 4:
-            return 'May';
-            break;
-        case 5:
-            return 'June';
-            break;
-        case 6:
-            return 'July';
-            break;
-        case 7:
-            return 'August';
-            break;
-        case 8:
-            return 'September';
-            break;
-        case 9:
-            return 'October';
-            break;
-        case 10:
-            return 'November';
-            break;
-        case 11:
-            return 'December';
-            break;
-        default:
-            return "ERROR!"
-            break;
-    }
-}
-
 const date = currentDate.getDate();
 const year = currentDate.getFullYear();
 
-todaysDate.innerHTML = `${dayOfWeek(day)}, ${monthOfYear(month)} ${date}, ${year}`;
+todaysDate.innerHTML = `${days[day]}, ${months[month]} ${date}${dateAppend(date)}, ${year}`;
 
-// Creating and updating the clock
+function dateAppend(date) {
+    if (date === 11 || date === 12 || date === 13) {
+        return 'th';
+    } else if (date % 10 === 1) {
+        return 'st';
+    } else if (date % 10 === 2) {
+        return 'nd';
+    } else if (date % 10 === 3) {
+        return 'rd';
+    } else {
+        return 'th';
+    }
+}
+
+//This is so the clock shows up immediately on page load
+
+const hour = currentDate.getHours();
+const minutes = currentDate.getMinutes();
+const seconds = currentDate.getSeconds();
+currentTime.innerHTML =
+    `${checkHour(hour)}:${checkZero(minutes)}:${checkZero(seconds)}${amPm(hour)}`;
+
+//updating the clock
 
 let update = setInterval(clock, 1000);
 
@@ -98,7 +66,15 @@ function clock() {
     const minutes = timeNow.getMinutes();
     const seconds = timeNow.getSeconds();
     currentTime.innerHTML =
-        `${checkZero(hour)}:${checkZero(minutes)}:${checkZero(seconds)}`;
+        `${checkHour(hour)}:${checkZero(minutes)}:${checkZero(seconds)}${amPm(hour)}`;
+}
+
+function amPm(hour) {
+    if (hour < 12) {
+        return 'AM'
+    } else {
+        return 'PM'
+    }
 }
 
 function checkZero(time) {
@@ -108,3 +84,13 @@ function checkZero(time) {
         return time;
     }
 }
+
+function checkHour(hour) {
+    if (hour > 12) {
+        reutrn`${hour - 12}`
+    }
+    else {
+        return hour;
+    }
+}
+
