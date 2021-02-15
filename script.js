@@ -87,7 +87,7 @@ function checkZero(time) {
 
 function checkHour(hour) {
     if (hour > 12) {
-        reutrn`${hour - 12}`
+        return`${hour - 12}`
     }
     else {
         return hour;
