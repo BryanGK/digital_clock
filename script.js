@@ -72,4 +72,4 @@ displayDateTime();
 
 setInterval(() => {
     displayDateTime();
-})
+}, 1000);
