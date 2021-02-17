@@ -1,4 +1,3 @@
-const currentDate = new Date();
 const todaysDate = document.querySelector('#todays-date');
 const currentTime = document.querySelector('#current-time')
 
@@ -27,70 +26,50 @@ const days = [
     'Saturday',
 ];
 
-const day = currentDate.getDay();
-const month = currentDate.getMonth();
-const date = currentDate.getDate();
-const year = currentDate.getFullYear();
+function displayDateTime() {
+    const currentDate = new Date();
+    const day = currentDate.getDay();
+    const month = currentDate.getMonth();
+    const date = currentDate.getDate();
+    const year = currentDate.getFullYear();
+    todaysDate.textContent =
+        `${days[day]}, ${months[month]} ${dateAppend(date)}, ${year}`;
 
-todaysDate.innerHTML = `${days[day]}, ${months[month]} ${date}${dateAppend(date)}, ${year}`;
-
-function dateAppend(date) {
-    if (date === 11 || date === 12 || date === 13) {
-        return 'th';
-    } else if (date % 10 === 1) {
-        return 'st';
-    } else if (date % 10 === 2) {
-        return 'nd';
-    } else if (date % 10 === 3) {
-        return 'rd';
-    } else {
-        return 'th';
-    }
-}
-
-//This is so the clock shows up immediately on page load
-
-const hour = currentDate.getHours();
-const minutes = currentDate.getMinutes();
-const seconds = currentDate.getSeconds();
-currentTime.innerHTML =
-    `${checkHour(hour)}:${checkZero(minutes)}:${checkZero(seconds)}${amPm(hour)}`;
-
-//updating the clock
-
-let update = setInterval(clock, 1000);
-
-function clock() {
-    const timeNow = new Date();
-    const hour = timeNow.getHours();
-    const minutes = timeNow.getMinutes();
-    const seconds = timeNow.getSeconds();
-    currentTime.innerHTML =
+    const hour = currentDate.getHours();
+    const minutes = currentDate.getMinutes();
+    const seconds = currentDate.getSeconds();
+    currentTime.textContent =
         `${checkHour(hour)}:${checkZero(minutes)}:${checkZero(seconds)}${amPm(hour)}`;
 }
 
-function amPm(hour) {
-    if (hour < 12) {
-        return 'AM'
-    } else {
-        return 'PM'
+function dateAppend(date) {
+    if (date < 10 || date > 20) {
+        switch (date % 10) {
+            case 1:
+                return date + 'st';
+            case 2:
+                return date + 'nd';
+            case 3:
+                return date + 'rd';
+        }
     }
+    return date + 'th';
+}
+
+function amPm(hour) {
+    return hour < 12 ? 'AM' : 'PM';
 }
 
 function checkZero(time) {
-    if (time < 10) {
-        return `0${time}`;
-    } else {
-        return time;
-    }
+    return time < 10 ? `0${time}` : time;
 }
 
 function checkHour(hour) {
-    if (hour > 12) {
-        return`${hour - 12}`
-    }
-    else {
-        return hour;
-    }
+    return hour > 12 ? `${hour - 12}` : hour;
 }
 
+displayDateTime();
+
+setInterval(() => {
+    displayDateTime();
+})
